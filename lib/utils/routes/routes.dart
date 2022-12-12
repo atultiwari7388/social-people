@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tech_media/utils/routes/route_name.dart';
+import 'package:tech_media/view/login/login_screen.dart';
 import 'package:tech_media/view/splash/splash_screen.dart';
 
 class Routes {
@@ -7,7 +8,12 @@ class Routes {
     final arguments = settings.arguments;
     switch (settings.name) {
       case RouteName.splashScreen:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
+        return MaterialPageRoute(
+          builder: (_) => const SplashScreen(),
+        );
+
+      case RouteName.loginScreen:
+        return MaterialPageRoute(builder: (_) => const LoginView());
 
       default:
         return MaterialPageRoute(builder: (_) {

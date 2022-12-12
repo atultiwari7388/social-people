@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: RouteName.splashScreen,
+      initialRoute: RouteName.loginScreen,
       onGenerateRoute: Routes.generateRoute,
     );
   }
