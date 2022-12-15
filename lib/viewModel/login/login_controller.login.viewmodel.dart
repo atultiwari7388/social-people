@@ -27,7 +27,7 @@ class LoginController with ChangeNotifier {
         setLoading(false);
         //move to next screen
         Navigator.pushNamedAndRemoveUntil(
-            context, RouteName.homeScreen, (route) => false);
+            context, RouteName.dashboardScreen, (route) => false);
       }).onError((error, stackTrace) {
         setLoading(false);
         Utils.toastMessage(error.toString());

@@ -1,38 +1,63 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tech_media/utils/routes/route_name.dart';
-import 'package:tech_media/viewModel/session/session_controller.session.viewmodel.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:tech_media/res/color.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+class DashBoardView extends StatefulWidget {
+  const DashBoardView({Key? key}) : super(key: key);
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<DashBoardView> createState() => _DashBoardViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _DashBoardViewState extends State<DashBoardView> {
+  final controller = PersistentTabController(initialIndex: 0);
+
+  List<Widget> _buildScreen() {
+    return [
+      Text("Home"),
+      Text("Chat "),
+      Text("Add"),
+      Text("Message"),
+      Text("Profile"),
+    ];
+  }
+
+  List<PersistentBottomNavBarItem> _navBarItem() {
+    return [
+      PersistentBottomNavBarItem(
+          icon: const Icon(Icons.home_outlined),
+          activeColorPrimary: AppColors.primaryIconColor,
+          inactiveIcon: const Icon(Icons.home)),
+      PersistentBottomNavBarItem(
+          icon: const Icon(Icons.chat_bubble_outline),
+          activeColorPrimary: AppColors.primaryIconColor,
+          inactiveIcon: const Icon(Icons.chat_bubble)),
+      PersistentBottomNavBarItem(
+          icon: const Icon(Icons.add_a_photo),
+          activeColorPrimary: AppColors.primaryIconColor,
+          inactiveIcon: const Icon(Icons.add_a_photo)),
+      PersistentBottomNavBarItem(
+          icon: const Icon(Icons.message_outlined),
+          activeColorPrimary: AppColors.primaryIconColor,
+          inactiveIcon: const Icon(Icons.message)),
+      PersistentBottomNavBarItem(
+          icon: const Icon(Icons.person_outline_outlined),
+          activeColorPrimary: AppColors.primaryIconColor,
+          inactiveIcon: const Icon(Icons.person)),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              FirebaseAuth auth = FirebaseAuth.instance;
-
-              auth.signOut().then((value) {
-                SessionController().userId = "";
-                Navigator.pushNamedAndRemoveUntil(
-                    context, RouteName.loginScreen, (route) => false);
-              });
-            },
-            icon: const Icon(Icons.logout),
-          ),
-        ],
+    return PersistentTabView(
+      context,
+      controller: controller,
+      screens: _buildScreen(),
+      items: _navBarItem(),
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.circular(1),
       ),
-      body: Center(
-        child: Text(SessionController().userId.toString()),
-      ),
+      navBarStyle: NavBarStyle.style15,
     );
   }
 }

@@ -19,8 +19,8 @@ class Routes {
       case RouteName.signupScreen:
         return MaterialPageRoute(builder: (_) => const SignUpView());
 
-      case RouteName.homeScreen:
-        return MaterialPageRoute(builder: (_) => const HomeView());
+      case RouteName.dashboardScreen:
+        return MaterialPageRoute(builder: (_) => const DashBoardView());
 
       case RouteName.forgotPassword:
         return MaterialPageRoute(builder: (_) => const ForgotPassword());
