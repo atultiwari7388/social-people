@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:tech_media/utils/routes/route_name.dart';
 import 'package:tech_media/utils/utils.utils.dart';
 
 class SignUpController with ChangeNotifier {
@@ -16,8 +17,8 @@ class SignUpController with ChangeNotifier {
   }
 
   //create user
-  void createAccount(
-      String userName, String emailAddress, String password) async {
+  void createAccount(String userName, String emailAddress, String password,
+      BuildContext context) async {
     setLoading(true);
     try {
       auth
@@ -36,6 +37,9 @@ class SignUpController with ChangeNotifier {
           "profilePicture": "",
         }).then((value) {
           setLoading(false);
+          //move to home screen
+          Navigator.pushNamedAndRemoveUntil(
+              context, RouteName.homeScreen, (route) => false);
         }).onError((error, stackTrace) {
           setLoading(false);
           Utils.toastMessage(error.toString());

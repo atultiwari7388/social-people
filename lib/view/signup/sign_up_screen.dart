@@ -4,7 +4,6 @@ import 'package:tech_media/res/components/round_button.components.res.dart';
 import 'package:tech_media/res/components/text_field.components.dart';
 import 'package:tech_media/utils/routes/route_name.dart';
 import 'package:tech_media/viewModel/signup/signup_controller.signup.dart';
-
 import '../../utils/utils.utils.dart';
 
 class SignUpView extends StatefulWidget {
@@ -75,7 +74,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 },
                                 keyboardType: TextInputType.emailAddress,
                                 obscureText: false,
-                                hintText: "Email",
+                                hintText: "Username",
                                 formFieldValidator: (value) {
                                   return value.isEmpty
                                       ? "Enter email address"
@@ -128,6 +127,7 @@ class _SignUpViewState extends State<SignUpView> {
                               userNameController.text.toString(),
                               emailController.text.toString(),
                               passwordController.text.toString(),
+                              context,
                             );
                           }
                         },
