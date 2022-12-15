@@ -97,14 +97,18 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: Text(
-                          "Forgot Password",
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(
-                                  fontSize: 15,
-                                  decoration: TextDecoration.underline),
+                        child: GestureDetector(
+                          onTap: () => Navigator.pushNamed(
+                              context, RouteName.forgotPassword),
+                          child: Text(
+                            "Forgot Password",
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    fontSize: 15,
+                                    decoration: TextDecoration.underline),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 40),

@@ -15,7 +15,7 @@ class LoginController with ChangeNotifier {
     notifyListeners();
   }
 
-  //create user
+  //user login
   void login(String emailAddress, String password, BuildContext context) async {
     setLoading(true);
     try {
@@ -28,6 +28,26 @@ class LoginController with ChangeNotifier {
         //move to next screen
         Navigator.pushNamedAndRemoveUntil(
             context, RouteName.homeScreen, (route) => false);
+      }).onError((error, stackTrace) {
+        setLoading(false);
+        Utils.toastMessage(error.toString());
+      });
+    } catch (e) {
+      setLoading(false);
+      Utils.toastMessage(e.toString());
+    }
+  }
+
+  // forgot password
+
+  void forgotPassword(BuildContext context, String emailAddress) async {
+    setLoading(true);
+
+    try {
+      auth.sendPasswordResetEmail(email: emailAddress).then((value) {
+        setLoading(false);
+        Navigator.pushNamed(context, RouteName.loginScreen);
+        Utils.toastMessage("Please check your email to recover your pass");
       }).onError((error, stackTrace) {
         setLoading(false);
         Utils.toastMessage(error.toString());
