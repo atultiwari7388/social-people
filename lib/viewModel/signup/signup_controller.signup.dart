@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tech_media/utils/utils.utils.dart';
 
 class SignUpController with ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
+  //realtime database
+  DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
   bool _loading = false;
   bool get loading => _loading;
 
@@ -23,6 +26,20 @@ class SignUpController with ChangeNotifier {
           .then((value) {
         Utils.toastMessage("Account Created Successfully");
         setLoading(false);
+        //store user data to realtime database
+        dbRef.child(value.user!.uid.toString()).set({
+          "uid": value.user!.uid.toString(),
+          "email": value.user!.email.toString(),
+          "userName": userName,
+          "onlineStatus": "noOne",
+          "phoneNumber": "",
+          "profilePicture": "",
+        }).then((value) {
+          setLoading(false);
+        }).onError((error, stackTrace) {
+          setLoading(false);
+          Utils.toastMessage(error.toString());
+        });
       }).onError((error, stackTrace) {
         setLoading(false);
         Utils.toastMessage(error.toString());
@@ -33,3 +50,5 @@ class SignUpController with ChangeNotifier {
     }
   }
 }
+
+//27:37
