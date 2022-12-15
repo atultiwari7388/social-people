@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tech_media/utils/routes/route_name.dart';
 import '../../utils/utils.utils.dart';
+import '../session/session_controller.session.viewmodel.dart';
 
 class LoginController with ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -21,6 +22,7 @@ class LoginController with ChangeNotifier {
       auth
           .signInWithEmailAndPassword(email: emailAddress, password: password)
           .then((value) {
+        SessionController().userId = value.user!.uid.toString();
         Utils.toastMessage("Welcome back");
         setLoading(false);
         //move to next screen
