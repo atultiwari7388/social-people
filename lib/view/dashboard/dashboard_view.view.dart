@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tech_media/res/color.dart';
+import 'package:tech_media/view/profile/profile_view.profile.view.dart';
 
 class DashBoardView extends StatefulWidget {
   const DashBoardView({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _DashBoardViewState extends State<DashBoardView> {
       Text("Chat "),
       Text("Add"),
       Text("Message"),
-      Text("Profile"),
+      const ProfileView(),
     ];
   }
 
