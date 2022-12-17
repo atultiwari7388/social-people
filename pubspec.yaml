@@ -41,7 +41,7 @@ dependencies:
   firebase_database: ^9.1.5
   persistent_bottom_nav_bar: ^5.0.2
   firebase_storage: ^10.3.9
-  image_picker: ^0.8.5+3
+  image_picker: ^0.8.6
   flutter_svg: ^1.1.5
   rename: ^2.0.1
 
