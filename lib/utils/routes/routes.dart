@@ -6,6 +6,7 @@ import 'package:tech_media/view/login/login_screen.dart';
 import 'package:tech_media/view/profile/profile_view.profile.view.dart';
 import 'package:tech_media/view/signup/sign_up_screen.dart';
 import 'package:tech_media/view/splash/splash_screen.dart';
+import 'package:tech_media/view/userList/user_list_view.userList.view.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -28,6 +29,9 @@ class Routes {
 
       case RouteName.profileScreen:
         return MaterialPageRoute(builder: (_) => const ProfileView());
+
+      case RouteName.userListScreen:
+        return MaterialPageRoute(builder: (_) => const UserListView());
 
       default:
         return MaterialPageRoute(builder: (_) {

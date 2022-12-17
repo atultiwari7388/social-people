@@ -9,7 +9,7 @@ import 'package:tech_media/utils/utils.utils.dart';
 import 'package:tech_media/viewModel/session/session_controller.session.viewmodel.dart';
 
 class ProfileController with ChangeNotifier {
-  DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("User");
+  DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
 
@@ -90,20 +90,16 @@ class ProfileController with ChangeNotifier {
 
   void uploadImage(BuildContext context) async {
     setLoading(true);
-
     //store user image to firebase Storage
-    firebase_storage.Reference reference = firebase_storage
+    firebase_storage.Reference storageRef = firebase_storage
         .FirebaseStorage.instance
-        .ref("/profileImage" + SessionController().userId.toString());
-
+        .ref("/profile${SessionController().userId}");
     firebase_storage.UploadTask uploadTask =
-        reference.putFile(File(image!.path).absolute);
-
+        storageRef.putFile(File(image!.path).absolute);
     //upload image
-    await Future.value();
+    await Future.value(uploadTask);
     //get uploaded image path
-    final newUrl = reference.getDownloadURL();
-
+    final newUrl = await storageRef.getDownloadURL();
     //upload image path to db ref
     dbRef.child(SessionController().userId.toString()).update({
       "profilePicture": newUrl.toString(),
@@ -180,7 +176,7 @@ class ProfileController with ChangeNotifier {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Center(child: Text("Update Username")),
+          title: const Center(child: Text("Update PhoneNumber")),
           content: SingleChildScrollView(
             child: Column(
               children: [

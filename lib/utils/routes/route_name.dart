@@ -5,4 +5,5 @@ class RouteName {
   static const String dashboardScreen = "dashboard_screen";
   static const String forgotPassword = "forgot_pass";
   static const String profileScreen = "profile_screen";
+  static const String userListScreen = "user_list_screen";
 }
