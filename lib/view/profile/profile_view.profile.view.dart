@@ -19,6 +19,7 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: ChangeNotifierProvider(
         create: (_) => ProfileController(),
         child: Consumer<ProfileController>(
@@ -111,17 +112,29 @@ class _ProfileViewState extends State<ProfileView> {
                           ],
                         ),
                         //name and id
-                        ReusableRow(
-                          title: "Username",
-                          value: map["userName"],
-                          iconData: Icons.person_outline_outlined,
+                        GestureDetector(
+                          onTap: () {
+                            provider.showUserNameDetailsDialogBox(
+                                context, map["userName"]);
+                          },
+                          child: ReusableRow(
+                            title: "Username",
+                            value: map["userName"],
+                            iconData: Icons.person_outline_outlined,
+                          ),
                         ),
-                        ReusableRow(
-                          title: "PhoneNumber",
-                          value: map["phoneNumber"] == ""
-                              ? "9876543223"
-                              : map["phoneNumber"],
-                          iconData: Icons.phone,
+                        GestureDetector(
+                          onTap: () {
+                            provider.showUserPhoneNumberDialogBox(
+                                context, map["phoneNumber"]);
+                          },
+                          child: ReusableRow(
+                            title: "PhoneNumber",
+                            value: map["phoneNumber"] == ""
+                                ? "9876543223"
+                                : map["phoneNumber"],
+                            iconData: Icons.phone,
+                          ),
                         ),
                         ReusableRow(
                           title: "Email",

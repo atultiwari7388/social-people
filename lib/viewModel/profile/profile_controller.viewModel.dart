@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tech_media/res/color.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:tech_media/res/components/text_field.components.dart';
 import 'package:tech_media/utils/utils.utils.dart';
 import 'package:tech_media/viewModel/session/session_controller.session.viewmodel.dart';
 
@@ -12,22 +13,23 @@ class ProfileController with ChangeNotifier {
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
 
+  final nameController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+
+  final nameFocusNode = FocusNode();
+  final phoneNumberFocusNode = FocusNode();
+
   final imagePicker = ImagePicker();
-
   XFile? _image;
-
   XFile? get image => _image;
-
   bool _loading = false;
   bool get loading => _loading;
-
   setLoading(bool value) {
     _loading = value;
     notifyListeners();
   }
 
   //pick image from gallery
-
   void pickImageFromGallery(BuildContext context) async {
     final pickedFile = await imagePicker.pickImage(
         source: ImageSource.gallery, imageQuality: 100);
@@ -40,7 +42,6 @@ class ProfileController with ChangeNotifier {
   }
 
   //pick image from camera
-
   void pickImageFromCamera(BuildContext context) async {
     final pickedFile = await imagePicker.pickImage(
         source: ImageSource.camera, imageQuality: 100);
@@ -114,5 +115,117 @@ class ProfileController with ChangeNotifier {
       Utils.toastMessage(error.toString());
       setLoading(false);
     });
+  }
+
+  //update user details dialog box
+  Future<void> showUserNameDetailsDialogBox(BuildContext context, String name) {
+    nameController.text = name;
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Center(child: Text("Update Username")),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextFormFieldComponent(
+                  controller: nameController,
+                  focusNode: nameFocusNode,
+                  onFieldSubmitValue: (value) {},
+                  keyboardType: TextInputType.name,
+                  obscureText: false,
+                  hintText: "userName",
+                  formFieldValidator: (value) {},
+                )
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                dbRef.child(SessionController().userId.toString()).update(
+                    {"userName": nameController.text.toString()}).then((value) {
+                  Utils.toastMessage("Username updated");
+                  nameController.clear();
+                }).onError((error, stackTrace) {
+                  Utils.toastMessage(error.toString());
+                });
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Update",
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                "Cancel",
+                style: TextStyle(color: AppColors.alertColor),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  //update user phone dialog box
+  Future<void> showUserPhoneNumberDialogBox(
+      BuildContext context, String phoneNumber) {
+    phoneNumberController.text = phoneNumber;
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Center(child: Text("Update Username")),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextFormFieldComponent(
+                  controller: phoneNumberController,
+                  focusNode: phoneNumberFocusNode,
+                  onFieldSubmitValue: (value) {},
+                  keyboardType: TextInputType.number,
+                  obscureText: false,
+                  hintText: "phoneNumber",
+                  formFieldValidator: (value) {},
+                )
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                dbRef.child(SessionController().userId.toString()).update({
+                  "phoneNumber": phoneNumberController.text.toString()
+                }).then((value) {
+                  Utils.toastMessage("PhoneNumber updated");
+                  phoneNumberController.clear();
+                }).onError((error, stackTrace) {
+                  Utils.toastMessage(error.toString());
+                });
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Update",
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                "Cancel",
+                style: TextStyle(color: AppColors.alertColor),
+              ),
+            )
+          ],
+        );
+      },
+    );
   }
 }

@@ -35,6 +35,7 @@ class TextFormFieldComponent extends StatelessWidget {
         onFieldSubmitted: onFieldSubmitValue,
         validator: formFieldValidator,
         keyboardType: keyboardType,
+        cursorColor: AppColors.primaryTextTextColor,
         style: Theme.of(context)
             .textTheme
             .bodyText2!
